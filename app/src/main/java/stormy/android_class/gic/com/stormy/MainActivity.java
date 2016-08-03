@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         //result = (TextView) findViewById(R.id.result);
         temperature = (TextView) findViewById(R.id.temperature);
 
+        //safasfdkafjlas
+        //asfalskfdjlakjfla
 
         final double latitude = 37.8267;
         final double longitude = -122.423;
