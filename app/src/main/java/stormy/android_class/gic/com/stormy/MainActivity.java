@@ -21,14 +21,16 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     TextView result;
-    String data;
+    JSONObject data;
+    TextView temperature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        result = (TextView) findViewById(R.id.result);
+        //result = (TextView) findViewById(R.id.result);
+        temperature = (TextView) findViewById(R.id.temperature);
 
 
         final double latitude = 37.8267;
@@ -73,7 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        result.setText(data);
+                        try {
+                            temperature.setText("" + (int) Math.round(data.getDouble("temperature")));
+                        } catch (JSONException e) {
+
+                        }
                     }
                 });
 
@@ -81,13 +87,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String getCurrentDetails(String jsonData) throws JSONException {
+    private JSONObject getCurrentDetails(String jsonData) throws JSONException {
 
 
         JSONObject jsonObject = new JSONObject(jsonData);
 
+        JSONObject currently = jsonObject.getJSONObject("currently");
 
-        return jsonObject.getString("latitude");
+
+        return currently;
 
     }
 }
