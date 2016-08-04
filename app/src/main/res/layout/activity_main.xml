@@ -19,12 +19,14 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iconId"
             android:padding="30dp"
             android:src="@mipmap/rain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/timezone"
             android:textColor="@color/white"
             android:textSize="@dimen/medium_font"
             android:layout_centerInParent="true"
@@ -34,6 +36,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/grey"
@@ -99,6 +102,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/humidity"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_font"
                 android:layout_weight=".5"
@@ -108,6 +112,7 @@
                 android:text="0.88"/>
 
             <TextView
+                android:id="@+id/dewPoint"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_font"
                 android:layout_weight=".5"
@@ -120,6 +125,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/summary"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
