@@ -9,10 +9,27 @@
     android:background="@color/app_background"
     tools:context="stormy.android_class.gic.com.stormy.MainActivity">
 
-    <TextView
-        android:text="Progress bar"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:src="@mipmap/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:visibility="invisible"
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_alignBottom="@id/refresh"
+            android:layout_alignRight="@id/refresh"
+            android:layout_height="wrap_content">
+        </ProgressBar>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

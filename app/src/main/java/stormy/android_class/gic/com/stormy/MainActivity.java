@@ -3,14 +3,19 @@ package stormy.android_class.gic.com.stormy;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import okhttp3.Call;
@@ -28,10 +33,15 @@ public class MainActivity extends AppCompatActivity {
     TextView humidity;
     TextView dewPoint;
     TextView summary;
-    TextView mIcon;
     TextView time;
-    ImageView iconId;
+    ImageView icon;
+    String icon_string;
+    int iconId;
 
+    ImageView refresh;
+    ProgressBar loading;
+
+    ///adfafdjafkaskfdjaksdfhk
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +54,28 @@ public class MainActivity extends AppCompatActivity {
         dewPoint = (TextView) findViewById(R.id.dewPoint);
         summary = (TextView) findViewById(R.id.summary);
         time = (TextView) findViewById(R.id.time);
-        iconId = (ImageView) findViewById(R.id.iconId);
+        icon = (ImageView) findViewById(R.id.iconId);
+        refresh = (ImageView) findViewById(R.id.refresh);
+        loading = (ProgressBar) findViewById(R.id.loading);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                refresh.setVisibility(View.INVISIBLE);
+                loading.setVisibility(View.VISIBLE);
+                //Toast.makeText(MainActivity.this,"refresh is clicked!",Toast.LENGTH_SHORT).show();
+                final double latitude = 48.867420;
+                final double longitude = 2.345839;
+                getForecast(latitude, longitude);
+            }
+        });
 
         //safasfdkafjlas
         //asfalskfdjlakjfla
 
-        final double latitude = 37.8267;
-        final double longitude = -122.423;
+        final double latitude = 11.501963;
+        final double longitude = 104.872325;
 
         getForecast(latitude, longitude);
     }
@@ -102,42 +127,63 @@ public class MainActivity extends AppCompatActivity {
                             humidity.setText("" + data.getJSONObject("currently").getDouble("humidity"));
                             dewPoint.setText("" + data.getJSONObject("currently").getDouble("dewPoint") + "%");
                             summary.setText("" + data.getJSONObject("minutely").getString("summary"));
-/*
-                            mIcon.setText("" + data.getJSONObject("minutely").getString("icon"));
-                            if (mIcon.equals("clear-day")) {
-                                iconId = R.drawable.clear_day;
+
+                            icon_string = data.getJSONObject("currently").getString("icon");
+                            //mIcon.setText("" + data.getJSONObject("minutely").getString("icon"));
+                            /*if (icon_string.equals("clear-day")) {
+                                iconId = R.mipmap.clear_day;
                             }
-                            else if (mIcon.equals("clear-night")) {
-                                iconId = R.drawable.clear_night;
+                            else if (icon_string.equals("clear-night")) {
+                                iconId = R.mipmap.clear_night;
                             }
-                            else if (mIcon.equals("rain")) {
-                                iconId = R.drawable.rain;
+                            else if (icon_string.equals("rain")) {
+                                iconId = R.mipmap.rain;
                             }
-                            else if (mIcon.equals("snow")) {
-                                iconId = R.drawable.snow;
+                            else if (icon_string.equals("snow")) {
+                                iconId = R.mipmap.snow;
                             }
-                            else if (mIcon.equals("sleet")) {
-                                iconId = R.drawable.sleet;
+                            else if (icon_string.equals("sleet")) {
+                                iconId = R.mipmap.sleet;
                             }
-                            else if (mIcon.equals("wind")) {
-                                iconId = R.drawable.wind;
+                            else if (icon_string.equals("wind")) {
+                                iconId = R.mipmap.wind;
                             }
-                            else if (mIcon.equals("fog")) {
-                                iconId = R.drawable.fog;
+                            else if (icon_string.equals("fog")) {
+                                iconId = R.mipmap.fog;
                             }
-                            else if (mIcon.equals("cloudy")) {
-                                iconId = R.drawable.cloudy;
+                            else if (icon_string.equals("cloudy")) {
+                                iconId = R.mipmap.cloudy;
                             }
-                            else if (mIcon.equals("partly-cloudy-day")) {
-                                iconId = R.drawable.partly_cloudy;
+                            else if (icon_string.equals("partly-cloudy-day")) {
+                                iconId = R.mipmap.partly_cloudy;
                             }
-                            else if (mIcon.equals("partly-cloudy-night")) {
-                                iconId = R.drawable.cloudy_night;
-                            }
-*/
+                            else if (icon_string.equals("partly-cloudy-night")) {
+                                iconId = R.mipmap.cloudy_night;
+                            }*/
+
+                            Map<String, Integer> iconIdArray = new HashMap<String, Integer>();
+                            iconIdArray.put("clear-day", R.mipmap.clear_day);
+                            iconIdArray.put("clear-night", R.mipmap.clear_night);
+                            iconIdArray.put("rain", R.mipmap.rain);
+                            iconIdArray.put("snow", R.mipmap.snow);
+                            iconIdArray.put("sleet", R.mipmap.sleet);
+                            iconIdArray.put("wind", R.mipmap.wind);
+                            iconIdArray.put("fog", R.mipmap.fog);
+                            iconIdArray.put("cloudy", R.mipmap.cloudy);
+                            iconIdArray.put("partly-cloudy-day", R.mipmap.partly_cloudy);
+                            iconIdArray.put("partly-cloudy-night", R.mipmap.cloudy_night);
+
+
+                            icon.setImageResource(iconIdArray.get(icon_string));
+
+
+
                         } catch (JSONException e) {
 
                         }
+
+                        refresh.setVisibility(View.VISIBLE);
+                        loading.setVisibility(View.INVISIBLE);
                     }
                 });
 
