@@ -1,8 +1,7 @@
 package stormy.android_class.gic.com.stormy;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,12 +11,10 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -25,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class Activity1 extends AppCompatActivity {
 
     TextView result;
     JSONObject data;
@@ -46,7 +43,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity1);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String result = extras.getString("boolean");
+            Toast.makeText(this, "" + result, Toast.LENGTH_SHORT).show();
+        }
 
         //result = (TextView) findViewById(R.id.result);
         temperature = (TextView) findViewById(R.id.temperature);
@@ -63,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, Activity1.class);
-                intent.putExtra("boolean", "From Main activity");
-                startActivity(intent);
+                refresh.setVisibility(View.INVISIBLE);
+                loading.setVisibility(View.VISIBLE);
+                //Toast.makeText(Activity1.this,"refresh is clicked!",Toast.LENGTH_SHORT).show();
+                final double latitude = 48.867420;
+                final double longitude = 2.345839;
+                getForecast(latitude, longitude);
             }
         });
 
@@ -117,11 +124,11 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             int sec = data.getJSONObject("currently").getInt("time");
                             String tnote;
-                            if((sec/3600%24+7)%12 >= 12) tnote = "pm";
+                            if ((sec / 3600 % 24 + 7) % 12 >= 12) tnote = "pm";
                             else tnote = "am";
                             temperature.setText("" + (int) Math.round(data.getJSONObject("currently").getDouble("temperature")));
                             timezone.setText("" + data.getString("timezone"));
-                            time.setText("At " + ((sec/3600%12+7)%13) + ":" + (sec/60%60)+ tnote + " It will be");
+                            time.setText("At " + ((sec / 3600 % 12 + 7) % 13) + ":" + (sec / 60 % 60) + tnote + " It will be");
                             humidity.setText("" + data.getJSONObject("currently").getDouble("humidity"));
                             dewPoint.setText("" + data.getJSONObject("currently").getDouble("dewPoint") + "%");
                             summary.setText("" + data.getJSONObject("minutely").getString("summary"));
@@ -173,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                             icon.setImageResource(iconIdArray.get(icon_string));
-
 
 
                         } catch (JSONException e) {

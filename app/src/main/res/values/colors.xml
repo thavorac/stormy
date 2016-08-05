@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="app_background">#F6C040</color>
+    <color name="activity1_background">#78B9ED</color>
     <color name="white">#FFF</color>
     <color name="grey">#E6E3DA</color>
 </resources>
